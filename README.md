@@ -1,2 +1,34 @@
-# PostgreSQL কী?
+# 1.PostgreSQL কী?
 PostgreSQL একটি ওপেন সোর্স, অবজেক্ট-রিলেশনাল ডাটাবেস ম্যানেজমেন্ট সিস্টেম (RDBMS), যা ডেটাবেস তৈরি, পরিচালনা এবং তথ্য সঞ্চয় করার জন্য ব্যবহৃত হয়। এটি SQL সমর্থন করে এবং বড় পরিমাণের ডেটা পরিচালনার জন্য সক্ষম। PostgreSQL শক্তিশালী এবং স্কেলেবল, বিভিন্ন ধরনের ডাটা টাইপ এবং বৈশিষ্ট্য (যেমন JSON, হ্যাশ টেবিল, এবং পারফরম্যান্স অপটিমাইজেশন) সহ ডেভেলপারদের জন্য একটি জনপ্রিয় পছন্দ। এটি নিরাপত্তা, রিলেশনাল ইন্টিগ্রিটি এবং ACID বৈশিষ্ট্যেও পূর্ণ সমর্থন প্রদান করে।
+
+# 2.Primary Key ও  Foreign Key কী?
+ 
+ **Primary Key**:
+ প্রাইমারি কি একটি টেবিলের জন্য এমন একটি ইউনিক ভ্যালু প্রদান করে, যা প্রতিটি রোকে একে অপর থেকে আলাদা করে। এটি একটি নির্দিষ্ট কলামের মাধ্যমে প্রতিটি রোকে সহজে শনাক্ত করতে সাহায্য করে, এবং কোন দুটি রো একই প্রাইমারি কি ভ্যালু শেয়ার করতে পারে না।
+
+**Foreign Key**
+ফরেন কী একটি টেবিলের কলাম যা অন্য একটি টেবিলের প্রাইমারি কীকে রেফারেন্স করে এবং টেবিলগুলোর মধ্যে সম্পর্ক তৈরি করে। ফরেন কী ডেটাবেজের মধ্যে সম্পর্ক স্থাপন করতে সাহায্য করে, যাতে একটি টেবিলের ডেটা অন্য টেবিলের ডেটার সাথে সঠিকভাবে সম্পর্কিত থাকে।
+
+```sql
+CREATE TABLE books (
+    isbn VARCHAR(13) PRIMARY KEY,  -- প্রাইমারি কী
+    title VARCHAR(100),
+    author VARCHAR(50),
+    publication_year INT
+);
+CREATE TABLE members (
+    member_id INT PRIMARY KEY,     -- প্রাইমারি কী
+    name VARCHAR(50),
+    email VARCHAR(50) UNIQUE,      -- ইউনিক কনস্ট্রেইন্ট
+    phone VARCHAR(15)
+);
+CREATE TABLE book_issues (
+    issue_id INT PRIMARY KEY,
+    isbn VARCHAR(13),
+    member_id INT,
+    issue_date DATE,
+    return_date DATE,
+    FOREIGN KEY (isbn) REFERENCES books(isbn),      -- ফরেন কী
+    FOREIGN KEY (member_id) REFERENCES members(member_id)  -- ফরেন কী
+);
+```
